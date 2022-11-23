@@ -1,0 +1,15 @@
+@use "theme";
+
+header {
+  max-width: 800px;
+  margin: 4rem auto;
+
+  > * {
+    font-size: 1.5rem;
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    color: white;
+    font-weight: 700;
+  }
+}

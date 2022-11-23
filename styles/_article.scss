@@ -1,0 +1,83 @@
+@use "theme";
+
+article {
+  display: block;
+
+  > * {
+    display: block;
+    margin: 1rem 0;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h1,
+  h2 {
+    border-bottom: 1px solid rgba(theme.$foreground, 0.5);
+    padding-bottom: 0.25em;
+  }
+
+  h3 {
+    font-size: 1.25em;
+  }
+
+  h4 {
+    font-size: 1em;
+  }
+
+  h5 {
+    font-size: 0.875em;
+  }
+
+  h6 {
+    font-size: 0.85em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  b,
+  strong {
+    font-weight: 700;
+  }
+
+  i,
+  em {
+    font-style: italic;
+  }
+
+  u,
+  ins {
+    text-decoration: underline;
+  }
+
+  s,
+  del {
+    text-decoration: line-through;
+  }
+
+  a:not(.cite) {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  a.cite {
+    color: aqua;
+    cursor: pointer;
+    font-size: 0.75em;
+    vertical-align: super;
+    text-decoration: none !important;
+  }
+}

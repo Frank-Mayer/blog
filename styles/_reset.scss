@@ -1,0 +1,25 @@
+@use "theme";
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  font-variant: normal;
+  border: none;
+  outline: none;
+  text-align: left;
+  text-transform: none;
+  text-shadow: none;
+  color: currentColor;
+  text-rendering: optimizeLegibility;
+  shape-rendering: geometricPrecision;
+  image-rendering: optimizeQuality;
+}
+
+:root {
+  font-family: "Segoe UI", sans-serif;
+}

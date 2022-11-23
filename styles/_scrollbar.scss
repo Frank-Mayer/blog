@@ -1,0 +1,24 @@
+@use "theme";
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: theme.$background;
+}
+
+::-webkit-scrollbar-thumb {
+  &:hover {
+    background: theme.$foreground;
+  }
+
+  &:not(:hover) {
+    background: rgba(theme.$foreground, 0.5);
+  }
+}
+
+::-webkit-scrollbar-corner {
+  background: theme.$background;
+}

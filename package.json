@@ -1,0 +1,30 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.9",
+    "bibtex-parse": "^2.1.0",
+    "eslint": "8.28.0",
+    "eslint-config-next": "13.0.4",
+    "gray-matter": "^4.0.3",
+    "next": "13.0.4",
+    "next-mdx-remote": "^4.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "typescript": "4.9.3"
+  },
+  "devDependencies": {
+    "@types/react-syntax-highlighter": "^15.5.5",
+    "sass": "^1.56.1"
+  }
+}

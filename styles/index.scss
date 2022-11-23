@@ -1,0 +1,23 @@
+@use "theme";
+@use "reset";
+@use "home";
+@use "article";
+@use "footer";
+@use "header";
+@use "scrollbar";
+
+:root,
+body {
+  background-color: theme.$background;
+  color: theme.$foreground;
+}
+
+main {
+  display: block;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 0.5em;
+
+  letter-spacing: 0.2px;
+  line-height: 1.25;
+}

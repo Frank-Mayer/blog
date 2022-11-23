@@ -1,0 +1,33 @@
+@use "theme";
+
+.articles {
+  list-style: none;
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+
+  > li {
+    display: block;
+
+    > a {
+      display: block;
+
+      > * {
+        display: block;
+
+        &.article-thumbnail {
+          font-size: 1.5rem;
+          transition: transform 0.2s ease-in-out;
+          will-change: transform;
+        }
+      }
+
+      &:hover {
+        > .article-thumbnail {
+          transform: rotateZ(-7.5deg) translate(0, -0.5rem);
+        }
+      }
+    }
+  }
+}
