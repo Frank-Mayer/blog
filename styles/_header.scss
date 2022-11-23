@@ -1,7 +1,7 @@
 @use "theme";
 
 header {
-  max-width: 800px;
+  max-width: theme.$max-page-width;
   margin: 4rem auto;
 
   > * {

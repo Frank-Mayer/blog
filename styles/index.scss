@@ -15,7 +15,7 @@ body {
 main {
   display: block;
   margin: 0 auto;
-  max-width: 800px;
+  max-width: theme.$max-page-width;
   padding: 0 0.5em;
 
   letter-spacing: 0.2px;

@@ -1,10 +1,14 @@
 @use "theme";
+@use "sass:math";
 
 .articles {
   list-style: none;
   display: grid;
   grid-auto-rows: 1fr;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(math.div(theme.$max-page-width, 3), 1fr)
+  );
   gap: 1rem;
 
   > li {
@@ -12,20 +16,18 @@
 
     > a {
       display: block;
+      text-decoration: none;
 
       > * {
         display: block;
 
         &.article-thumbnail {
           font-size: 1.5rem;
-          transition: transform 0.2s ease-in-out;
-          will-change: transform;
         }
-      }
 
-      &:hover {
-        > .article-thumbnail {
-          transform: rotateZ(-7.5deg) translate(0, -0.5rem);
+        &.article-title {
+          color: theme.$foreground-heading;
+          font-weight: 700;
         }
       }
     }
