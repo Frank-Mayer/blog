@@ -8,6 +8,11 @@ article {
     margin: 1rem 0;
   }
 
+  > ol,
+  > ul {
+    padding-left: 2rem;
+  }
+
   h1 {
     font-size: 2em;
   }
