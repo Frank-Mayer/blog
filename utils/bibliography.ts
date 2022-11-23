@@ -20,7 +20,7 @@ export const parseBibliography = (bibtex: string): Array<Bibliography> => {
   });
 };
 
-export const useBibliography = (
+export const applyBibliography = (
   md: string,
   bib?: Array<Bibliography>
 ): string => {
