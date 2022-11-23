@@ -15,6 +15,7 @@ footer {
     margin-top: 1.5rem;
     margin-bottom: 1rem;
     padding-bottom: 0.25em;
+    color: theme.$foreground-heading !important;
   }
 
   a {
@@ -22,5 +23,10 @@ footer {
     text-decoration-line: underline;
     text-decoration-style: solid;
     text-decoration-skip-ink: auto;
+    will-change: color;
+
+    &:hover {
+      color: theme.$foreground-heading;
+    }
   }
 }

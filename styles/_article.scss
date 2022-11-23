@@ -46,6 +46,7 @@ article {
   h6 {
     margin-top: 1.5rem;
     margin-bottom: 1rem;
+    color: theme.$foreground-heading !important;
   }
 
   b,
@@ -71,6 +72,12 @@ article {
   a:not(.cite) {
     text-decoration: underline;
     cursor: pointer;
+
+    will-change: color;
+
+    &:hover {
+      color: theme.$foreground-heading;
+    }
   }
 
   a.cite {
