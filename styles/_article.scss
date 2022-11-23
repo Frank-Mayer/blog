@@ -81,10 +81,14 @@ article {
   }
 
   a.cite {
-    color: aqua;
     cursor: pointer;
     font-size: 0.75em;
     vertical-align: super;
     text-decoration: none !important;
+    will-change: color;
+
+    &:hover {
+      color: theme.$foreground-heading;
+    }
   }
 }

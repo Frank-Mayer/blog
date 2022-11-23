@@ -14,34 +14,11 @@ Ich habe mich mit Branch Prediction und Speculative Execution beschäftigt, da d
 
 ## Worum geht es eigentlich?
 
-**Beispiel:**
+Die Auswirkungen einer einzelnen Prüfung sind sehr gering.
+Aber wie mit allem ist es die Summe der kleinen Probleme,
+die zu einem großen Problem führen kann.
 
-Annahme: In einer Variable `x` steht eine Zahl. Diese muss positiv sein, sonst funktioniert die Weiterverarbeitung nicht.
-
-Jetzt gibt es zwei Möglichkeiten:
-
-```javascript
-if (x < 0) {
-  throw new Error("x must be positive");
-}
-
-// mache etwas mit x
-```
-
-oder
-
-```javascript
-if (x >= 0) {
-  // mache etwas mit x
-} else {
-  throw new Error("x must be positive");
-}
-```
-
-Welche Unterschiede bestehen zwischen diesen beiden Varianten?
-
-Die erste finde ich persönlich einfacher lesbar, da sie weniger verschachtelt ist.
-Hier geht es mir aber um einen ganz anderen Aspekt, nämlich die Performance.
+Darum ist es wichtig zu verstehen, wie die CPU mit if-Anweisungen (conditional jump) umgeht.
 
 ## Instruction Pipelines
 
@@ -62,12 +39,36 @@ denn diese Anweisungen sind eventuell noch nicht vollständig ausgeführt worden
 Um dieses Problem zu lösen, verwenden moderne CPUs sogenannte Branch Prediction.
 Dabei wird eine Annahme getroffen,
 in welchem Zweig die Anweisung weitergeführt wird,
-bevor die Bedingung überhaupt geprüft wurde. \cite{baeldung-java-branch-prediction}
+bevor die Bedingung überhaupt geprüft wurde.\cite{baeldung-java-branch-prediction}
 
-Die CPU kann dabei falsch liegen.
 Wenn die Annahme falsch ist,
 muss die Anweisung zurückgesetzt werden und der andere Zweig ausgeführt werden.
+Das benötigt etwa 7 CPU-Zyklen mehr als wenn die Annahme korrekt gewesen wäre.\cite{cloudflare-branch-predictor}
+Man sollte daher darauf achten,
+dass eine Bedingung so oft wie möglich auf das selbe Ergebnis evaluiert.
 
 ## Speculative Execution
 
 Um die Performance noch weiter zu verbessern, wird Speculative Execution verwendet.
+Dabei werden Aufgaben ausgeführt, die eventuell gar nicht gebraucht werden.
+
+Wird die Aufgabe nicht gebraucht, wird sie verworfen.
+Dabei werden alle Änderungen, die durch die Aufgabe vorgenommen wurden, wieder rückgängig gemacht und das Ergebnis wird verworfen.
+
+Das macht die CPU, wenn Ressourcen frei sind, um die Ausführzeit zu verbessern.
+
+Es gibt zwei Arten von Speculative Execution:
+
+### Eager execution
+
+Hier werden beide Zweige ausgeführt.
+Es ist klar, dass nur einer davon benötigt wird,
+daher wird das Ergabnis erst nach der Evaluierung der Bedingung festgeschrieben.\cite{978-3-540-64798-0}
+
+### Predictive execution
+
+Hierbei wird nur der Zweig ausgeführt,
+welcher wahrscheinlich benötigt wird.
+Das ist der Zweig, der durch die Branch Prediction vorausgesagt wurde.
+Erst wenn die Bedingung geprüft wurde, wird die Änderung festgeschrieben.
+Andernfalls wird sie rückgängig gemacht und der andere Zweig wird ausgeführt.\cite{9781558605398}

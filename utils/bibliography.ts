@@ -8,8 +8,10 @@ export type Bibliography = {
   MONTH?: string;
   TITLE?: string;
   JOURNAL?: string;
+  PUBLISHER?: string;
   URL?: string;
   URLDATE?: string;
+  ISBN?: string;
 };
 
 export const parseBibliography = (bibtex: string): Array<Bibliography> => {
@@ -57,6 +59,8 @@ export const useBibliography = (
                   b.YEAR ? `(${b.YEAR})` : "",
                   b.TITLE ? `„${b.TITLE}“` : "",
                   b.JOURNAL ? `in ${b.JOURNAL}` : "",
+                  b.PUBLISHER ? `von ${b.PUBLISHER}` : "",
+                  b.ISBN ? `(ISBN ${b.ISBN})` : "",
                 ]
                   .filter(Boolean)
                   .join(" "),
