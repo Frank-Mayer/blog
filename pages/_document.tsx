@@ -5,6 +5,11 @@ const Document = () => {
     <Html lang="de-DE">
       <Head>
         <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1590375905385922"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
       <body>
         <Main />
