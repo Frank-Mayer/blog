@@ -4,7 +4,7 @@ import { getContent } from "../../utils/content";
 import { Feed } from "feed";
 import { getPath } from "../../utils/slug";
 
-const feedPromise = new Promise<Feed>(async (resolve) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const content = await getContent();
 
   const feed = new Feed({
@@ -43,13 +43,9 @@ const feedPromise = new Promise<Feed>(async (resolve) => {
 
   feed.addCategory("Technologie");
 
-  resolve(feed);
-});
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
   res.setHeader("Content-Type", "application/rss+xml");
-  res.status(200).send((await feedPromise).rss2());
-}
+
+  res.status(200).send(feed.rss2());
+};
+
+export default handler;
