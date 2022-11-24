@@ -27,7 +27,7 @@ export const getContent = async () => {
       const gm = matter(content);
       const frontMatter = gm.data;
 
-      const bibFile = join(contentDir, file.replace(/.mdx?$/, ".bib"));
+      const bibFile = join(contentDir, file.replace(/\.mdx?$/, ".bib"));
 
       const bibliography = existsSync(bibFile)
         ? parseBibliography(await readFile(bibFile, "utf-8"))

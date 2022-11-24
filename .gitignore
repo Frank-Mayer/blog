@@ -5,6 +5,11 @@
 /.pnp
 .pnp.js
 
+# generated files
+/public/rss.atom
+/public/rss.json
+/public/rss.xml
+
 # testing
 /coverage
 
