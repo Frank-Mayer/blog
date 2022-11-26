@@ -14,7 +14,31 @@ export type Content = {
     [key: string]: any;
   };
   content: string;
-  bibliography?: Array<Bibliography>;
+  bibliography?: Array<Bibliography> | undefined | null;
+};
+
+const mdExtensionRegex = /\.mdx?$/i;
+
+export const parseFile = async (
+  file: string,
+  content: string
+): Promise<Content> => {
+  const gm = matter(content);
+  const frontMatter = gm.data;
+
+  const bibFile = file.replace(mdExtensionRegex, ".bib");
+
+  const bibliography = existsSync(bibFile)
+    ? parseBibliography(await readFile(bibFile, "utf-8"))
+    : null;
+
+  return {
+    title: "title" in frontMatter ? frontMatter.title : filenameToTitle(file),
+    frontMatter: gm.data,
+    slug: filenameToSlug(file),
+    content: gm.content,
+    bibliography,
+  };
 };
 
 export const getContent = async () => {
@@ -24,23 +48,7 @@ export const getContent = async () => {
   const contents = await Promise.all(
     files.map(async (file) => {
       const content = await readFile(join(contentDir, file), "utf-8");
-      const gm = matter(content);
-      const frontMatter = gm.data;
-
-      const bibFile = join(contentDir, file.replace(/\.mdx?$/, ".bib"));
-
-      const bibliography = existsSync(bibFile)
-        ? parseBibliography(await readFile(bibFile, "utf-8"))
-        : null;
-
-      return {
-        title:
-          "title" in frontMatter ? frontMatter.title : filenameToTitle(file),
-        frontMatter: gm.data,
-        slug: filenameToSlug(file),
-        content: gm.content,
-        bibliography,
-      };
+      return parseFile(file, content);
     })
   );
 

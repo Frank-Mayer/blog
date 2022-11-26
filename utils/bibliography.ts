@@ -14,6 +14,9 @@ export type Bibliography = {
   ISBN?: string;
 };
 
+const a = (href: string, innerText: string) =>
+  `<a href="${href}" target="_blank" rel="noopener noreferrer">${innerText}</a>`;
+
 export const parseBibliography = (bibtex: string): Array<Bibliography> => {
   return bibtexParse.entries(bibtex, {
     number: "string",
@@ -22,15 +25,16 @@ export const parseBibliography = (bibtex: string): Array<Bibliography> => {
 
 export const applyBibliography = (
   md: string,
-  bib?: Array<Bibliography>
+  bib: Array<Bibliography> | undefined | null
 ): string => {
-  if (!bib) {
+  if (!Array.isArray(bib)) {
+    console.warn("No bibliography found");
     return md;
   }
 
   const usedBib = new Array<string>();
 
-  let newMd = md.replace(/\\cite{\s*([^}\n]+)\s*}/g, (tex, id) => {
+  let newMd = md.replace(/\[\^\s*([^}\n]+)\s*\]/g, (tex, id) => {
     let i = -1;
     if (usedBib.indexOf(id) === -1) {
       i = usedBib.push(id);
@@ -60,12 +64,17 @@ export const applyBibliography = (
                   b.TITLE ? `„${b.TITLE}“` : "",
                   b.JOURNAL ? `in ${b.JOURNAL}` : "",
                   b.PUBLISHER ? `von ${b.PUBLISHER}` : "",
-                  b.ISBN ? `(ISBN ${b.ISBN})` : "",
+                  b.ISBN
+                    ? a(
+                        `https://www.isbn-suchen.de/search.php?q=${b.ISBN}`,
+                        `(ISBN ${b.ISBN})`
+                      )
+                    : "",
                 ]
                   .filter(Boolean)
                   .join(" "),
                 [
-                  b.URL ? `<Link href="${b.URL}">${b.URL}</Link>` : "",
+                  b.URL ? a(b.URL, b.URL) : "",
                   b.URLDATE
                     ? `(${new Date(b.URLDATE).toLocaleDateString("de-DE")})`
                     : "",

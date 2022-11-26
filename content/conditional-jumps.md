@@ -39,11 +39,11 @@ denn diese Anweisungen sind eventuell noch nicht vollständig ausgeführt worden
 Um dieses Problem zu lösen, verwenden moderne CPUs sogenannte Branch Prediction.
 Dabei wird eine Annahme getroffen,
 in welchem Zweig die Anweisung weitergeführt wird,
-bevor die Bedingung überhaupt geprüft wurde.\cite{baeldung-java-branch-prediction}
+bevor die Bedingung überhaupt geprüft wurde.[^baeldung-java-branch-prediction]
 
 Wenn die Annahme falsch ist,
 muss die Anweisung zurückgesetzt werden und der andere Zweig ausgeführt werden.
-Das benötigt etwa 7 CPU-Zyklen mehr als wenn die Annahme korrekt gewesen wäre.\cite{cloudflare-branch-predictor}
+Das benötigt etwa 7 CPU-Zyklen mehr als wenn die Annahme korrekt gewesen wäre.[^cloudflare-branch-predictor]
 Man sollte daher darauf achten,
 dass eine Bedingung so oft wie möglich auf das selbe Ergebnis evaluiert.
 
@@ -63,7 +63,7 @@ Es gibt zwei Arten von Speculative Execution:
 
 Hier werden beide Zweige ausgeführt.
 Es ist klar, dass nur einer davon benötigt wird,
-daher wird das Ergabnis erst nach der Evaluierung der Bedingung festgeschrieben.\cite{978-3-540-64798-0}
+daher wird das Ergabnis erst nach der Evaluierung der Bedingung festgeschrieben.[^978-3-540-64798-0]
 
 ### Predictive execution
 
@@ -71,4 +71,4 @@ Hierbei wird nur der Zweig ausgeführt,
 welcher wahrscheinlich benötigt wird.
 Das ist der Zweig, der durch die Branch Prediction vorausgesagt wurde.
 Erst wenn die Bedingung geprüft wurde, wird die Änderung festgeschrieben.
-Andernfalls wird sie rückgängig gemacht und der andere Zweig wird ausgeführt.\cite{9781558605398}
+Andernfalls wird sie rückgängig gemacht und der andere Zweig wird ausgeführt.[^9781558605398]
