@@ -22,6 +22,8 @@ CI: ![Vercel](https://vercelbadge.vercel.app/api/Frank-Mayer/blog)
    ```
 1. Build the project
    ```bash
-   npm run build
+   bun run prebuild
+   bun run build
+   bun run postbuild
    ```
 1. The build files are in the `out` folder
