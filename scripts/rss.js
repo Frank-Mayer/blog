@@ -32,13 +32,7 @@ const generateRSS = async () => {
             description: String(md.data.description),
             content: md.content,
             slug,
-            link: [
-              "https://blog.frank-mayer.io",
-              date.getFullYear(),
-              date.getMonth() + 1,
-              date.getDate(),
-              slug,
-            ].join("/"),
+            link: ["https://blog.frank-mayer.io", slug].join("/"),
           };
         })
     )
