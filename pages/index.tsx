@@ -38,6 +38,16 @@ const Page = (props: Props) => (
               {item.frontMatter.description}
             </span>
           </Link>
+          <span>
+            Thumbnail von{" "}
+            <a
+              target="_blank"
+              rel="noreferrer noopener"
+              href={item.frontMatter.photoBy.url}
+            >
+              {item.frontMatter.photoBy.name}
+            </a>
+          </span>
         </li>
       ))}
     </ul>
