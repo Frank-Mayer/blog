@@ -8,9 +8,27 @@ article {
     margin: 1rem 0;
   }
 
-  > ol,
-  > ul {
+  ol,
+  ul {
     padding-left: 2rem;
+  }
+
+  nav.toc {
+    .toc-level-1 {
+      list-style-type: decimal;
+
+      .toc-level-2 {
+        list-style-type: lower-alpha;
+
+        .toc-level-3 {
+          list-style-type: lower-roman;
+
+          .toc-level-4 {
+            display: none;
+          }
+        }
+      }
+    }
   }
 
   h1 {
@@ -52,6 +70,10 @@ article {
     margin-top: 1.5rem;
     margin-bottom: 1rem;
     color: theme.$foreground-heading !important;
+
+    > * {
+      font-size: 1em !important;
+    }
   }
 
   b,

@@ -3,6 +3,7 @@ import { type Content, getContent, parseFile } from "../utils/content";
 import { getPath } from "../utils/slug";
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
+import type { CompileOptions } from "@mdx-js/mdx";
 import { SyntaxHighlighting } from "../components/SyntaxHighlighting";
 import Head from "next/head";
 import { applyBibliographyAsync } from "../utils/bibliography";
@@ -11,10 +12,31 @@ import Link from "next/link";
 import { readFile } from "fs/promises";
 import { join } from "path";
 import { existsSync } from "fs";
+import rehypeSlug from "rehype-slug";
+import rehypeToc from "@jsdevtools/rehype-toc";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 type Props = Content & { source: MDXRemoteSerializeResult };
 
 const components = { SyntaxHighlighting, Link };
+
+const mdxOptions: Omit<
+  CompileOptions,
+  "outputFormat" | "providerImportSource"
+> = {
+  // remarkPlugins: [],
+  rehypePlugins: [
+    rehypeSlug,
+    rehypeToc,
+    [
+      rehypeAutolinkHeadings,
+      {
+        behavior: "wrap",
+      },
+    ],
+  ],
+  format: "mdx",
+};
 
 export const getStaticPaths: GetStaticPaths = async () => ({
   paths: (await getContent()).map((item) => getPath(item)),
@@ -47,7 +69,10 @@ export const getStaticProps = async (
         source: await serialize(
           mdSupercharge(
             await applyBibliographyAsync(item.content, item.bibliography)
-          )
+          ),
+          {
+            mdxOptions,
+          }
         ),
       },
     };
