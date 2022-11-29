@@ -17,8 +17,14 @@ export type Bibliography = {
   ISBN?: string;
 };
 
-const a = (href: string, innerText: string) =>
-  `<a href="${href}" target="_blank" rel="noopener noreferrer">${innerText}</a>`;
+const a = (href: string, innerText?: string) => {
+  const url = new URL(href);
+  return `<a href="${url.href}" target="_blank" rel="noopener noreferrer">${
+    innerText
+      ? innerText
+      : url.origin + url.pathname.replace(/(?<!\/)\/(?!\/)/g, "/<wbr/>")
+  }</a>`;
+};
 
 export const parseBibliography = (bibtex: string): Array<Bibliography> => {
   return bibtexParse.entries(bibtex, {
@@ -181,7 +187,7 @@ const bibOnlineAsync = async (bib: Bibliography): Promise<string> => {
       "<em>",
       await bibWebsiteTitleAsync(bib),
       "</em> [Online]. ",
-      a(bib.URL, bib.URL),
+      a(bib.URL),
       ". "
     );
 
