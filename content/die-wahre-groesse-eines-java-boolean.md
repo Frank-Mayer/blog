@@ -1,6 +1,6 @@
 ---
 title: Die wahre Größe eines Java boolean
-description: Wie viel Speicherplatz verbraucht ein Boolean in Java?
+description: Wie viel Speicherplatz verbraucht ein boolean in Java?
 date: "2022-12-01"
 thumbnail: die-wahre-groesse-eines-java-boolean.webp
 prerelease: true
