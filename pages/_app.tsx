@@ -4,6 +4,7 @@ import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const variants = {
   hidden: { opacity: 0, x: 100, y: 0 },
@@ -16,6 +17,11 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
+      <Head>
+        <meta http-equiv="language" content="de" />
+        <meta name="author" content="Frank Mayer" />
+      </Head>
+
       <Header />
 
       <AnimatePresence

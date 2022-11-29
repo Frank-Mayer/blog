@@ -86,6 +86,7 @@ const Page = (props: Props) => {
     <>
       <Head>
         <title>{props.title}</title>
+        <meta name="title" content={props.title}/>
         <meta name="description" content={props.frontMatter.description} />
       </Head>
 
