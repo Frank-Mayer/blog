@@ -31,12 +31,15 @@ const generateRSS = async () => {
             date: date,
             description: String(md.data.description),
             content: md.content,
+            prerelease: md.data.prerelease,
             slug,
             link: ["https://blog.frank-mayer.io", slug].join("/"),
           };
         })
     )
-  ).sort((a, b) => b.date - a.date);
+  )
+    .filter((f) => !f.prerelease)
+    .sort((a, b) => b.date - a.date);
 
   const feed = new Feed({
     title: "Frank's Blog",

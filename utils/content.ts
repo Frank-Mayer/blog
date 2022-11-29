@@ -56,10 +56,9 @@ export const getContent = async (getPrerelease: boolean = true) => {
   return (
     getPrerelease
       ? contents
-      : contents.filter((c) => {
-          console.debug(c.frontMatter);
-          return !("prerelease" in c.frontMatter) || !c.frontMatter.prerelease;
-        })
+      : contents.filter(
+          (c) => !("prerelease" in c.frontMatter) || !c.frontMatter.prerelease
+        )
   ).sort((a, b) => {
     return Date.parse(b.frontMatter.date) - Date.parse(a.frontMatter.date);
   }) as ReadonlyArray<Content>;

@@ -39,7 +39,7 @@ const mdxOptions: Omit<
 };
 
 export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: (await getContent()).map((item) => getPath(item)),
+  paths: (await getContent(false)).map((item) => getPath(item)),
   fallback: false,
 });
 
