@@ -74,26 +74,24 @@ article {
     text-decoration: line-through;
   }
 
-  a:not(.cite) {
-    text-decoration: underline;
+  a {
     cursor: pointer;
+    will-change: color, text-decoration;
 
-    will-change: color;
+    &:not(:hover) {
+      color: theme.$foreground-heading;
+      text-decoration: none;
+    }
 
     &:hover {
       color: theme.$foreground-heading;
+      text-decoration: underline;
     }
   }
 
-  a.cite {
-    cursor: pointer;
-    font-size: 0.75em;
-    vertical-align: super;
-    text-decoration: none !important;
-    will-change: color;
-
-    &:hover {
-      color: theme.$foreground-heading;
-    }
+  .cites {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-gap: 0.2rem;
   }
 }

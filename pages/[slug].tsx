@@ -5,7 +5,7 @@ import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import { SyntaxHighlighting } from "../components/SyntaxHighlighting";
 import Head from "next/head";
-import { applyBibliography } from "../utils/bibliography";
+import { applyBibliographyAsync } from "../utils/bibliography";
 import { mdSupercharge } from "../utils/mdSupercharge";
 import Link from "next/link";
 import { readFile } from "fs/promises";
@@ -45,7 +45,9 @@ export const getStaticProps = async (
       props: {
         ...item,
         source: await serialize(
-          mdSupercharge(applyBibliography(item.content, item.bibliography))
+          mdSupercharge(
+            await applyBibliographyAsync(item.content, item.bibliography)
+          )
         ),
       },
     };

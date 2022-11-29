@@ -6,10 +6,13 @@ export type Bibliography = {
   AUTHOR?: string;
   YEAR?: string;
   MONTH?: string;
+  CHAPTER?: string;
   TITLE?: string;
   JOURNAL?: string;
   PUBLISHER?: string;
+  ADDRESS?: string;
   URL?: string;
+  URLTITLE?: string;
   URLDATE?: string;
   ISBN?: string;
 };
@@ -23,10 +26,10 @@ export const parseBibliography = (bibtex: string): Array<Bibliography> => {
   });
 };
 
-export const applyBibliography = (
+export const applyBibliographyAsync = async (
   md: string,
   bib: Array<Bibliography> | undefined | null
-): string => {
+): Promise<string> => {
   if (!Array.isArray(bib)) {
     console.warn("No bibliography found");
     return md;
@@ -48,48 +51,155 @@ export const applyBibliography = (
   if (usedBib.length > 0) {
     newMd =
       newMd.trim() +
-      "\n\n## Einzelnachweise\n\n" +
-      "<ol>\n" +
-      usedBib
-        .map((id, i) => {
-          const b = bib.find((entry) => entry.key === id);
+      "\n\n## Referenzen\n\n" +
+      '<div className="cites">' +
+      (
+        await Promise.all(
+          usedBib.map(async (id, i) => {
+            const b = bib.find((entry) => entry.key === id);
 
-          if (b) {
-            return (
-              `<li id="cite-${i + 1}">` +
-              [
-                [
-                  b.AUTHOR ? `${b.AUTHOR}` : "",
-                  b.YEAR ? `(${b.YEAR})` : "",
-                  b.TITLE ? `„${b.TITLE}“` : "",
-                  b.JOURNAL ? `in ${b.JOURNAL}` : "",
-                  b.PUBLISHER ? `von ${b.PUBLISHER}` : "",
-                  b.ISBN
-                    ? a(
-                        `https://www.isbn-suchen.de/search.php?q=${b.ISBN}`,
-                        `(ISBN ${b.ISBN})`
-                      )
-                    : "",
-                ]
-                  .filter(Boolean)
-                  .join(" "),
-                [
-                  b.URL ? a(b.URL, b.URL) : "",
-                  b.URLDATE
-                    ? `(${new Date(b.URLDATE).toLocaleDateString("de-DE")})`
-                    : "",
-                ]
-                  .filter(Boolean)
-                  .join(" "),
-              ].join(". ") +
-              "</li>"
-            );
-          }
-          return `<li id="cite-${i + 1}">${id}</li>`;
-        })
-        .join("\n") +
-      "\n</ol>";
+            return [
+              `<span id="cite-${i + 1}">[${i + 1}]</span>`,
+              `<span>${await bibAutoAsync(b, id)}</span>`,
+            ].join("");
+          })
+        )
+      ).join("") +
+      "</div>";
   }
 
   return newMd;
+};
+
+const bibAuthors = (bib: Bibliography): string => {
+  if (bib.AUTHOR) {
+    const authors = bib.AUTHOR.split(";")
+      .map((author) => author.split(",").map((a) => a.trim()))
+      .map((author) => author[1][0].toUpperCase() + ". " + author[0]);
+
+    const authorSep = authors.length > 2 ? "; " : " und ";
+
+    return authors.join(authorSep);
+  } else {
+    throw new Error(`No author found in bibliography "${bib.key}"`);
+  }
+};
+
+const bibWebsiteTitleAsync = async (bib: Bibliography): Promise<string> => {
+  if (bib.URLTITLE) {
+    return bib.URLTITLE;
+  }
+
+  if (bib.URL) {
+    const urlObj = new URL(bib.URL);
+
+    const resp = await fetch(urlObj.origin);
+    if (resp.ok) {
+      const html = await resp.text();
+      const titleMatch = html.match(
+        /<\s*title\s*>\s*([^<]+)\s*<\s*\/\s*title\s*>/
+      );
+      if (titleMatch) {
+        return titleMatch[1];
+      }
+    }
+
+    return urlObj.hostname;
+  }
+
+  throw new Error(`No URL found in bibliography "${bib.key}"`);
+};
+
+const bibBook = (bib: Bibliography): string => {
+  const str = new Array<string>();
+
+  str.push(bibAuthors(bib), ", ");
+
+  if (bib.TITLE) {
+    if (bib.CHAPTER) {
+      str.push(`"${bib.CHAPTER}" in `);
+    }
+
+    str.push(`<em>${bib.TITLE}</em>. `);
+  } else {
+    throw new Error(`No title found in bibliography "${bib.key}"`);
+  }
+
+  if (bib.ADDRESS) {
+    str.push(` ${bib.ADDRESS}: `);
+  }
+
+  if (bib.PUBLISHER) {
+    str.push(`${bib.PUBLISHER}, `);
+  }
+
+  if (bib.YEAR) {
+    str.push(`${bib.YEAR}.`);
+  }
+
+  if (bib.ISBN) {
+    bib.ISBN = bib.ISBN.replace(/[-_\s]+/g, "");
+
+    str.push(
+      ` ${a(
+        `https://www.isbn-suchen.de/search.php?q=${bib.ISBN}`,
+        `(ISBN ${bib.ISBN})`
+      )}.`
+    );
+  }
+
+  return str.join("");
+};
+
+const bibOnlineAsync = async (bib: Bibliography): Promise<string> => {
+  const str = new Array<string>();
+
+  str.push(bibAuthors(bib), ". ");
+
+  if (bib.YEAR) {
+    str.push(`(${bib.YEAR}). `);
+  }
+
+  if (bib.TITLE) {
+    str.push(`&ldquo;${bib.TITLE}&rdquo; `);
+  } else {
+    throw new Error(`No title found in bibliography "${bib.key}"`);
+  }
+
+  if (bib.URL) {
+    str.push(
+      "<em>",
+      await bibWebsiteTitleAsync(bib),
+      "</em> [Online]. ",
+      a(bib.URL, bib.URL),
+      ". "
+    );
+
+    if (bib.URLDATE) {
+      const date = new Date(bib.URLDATE);
+      str.push(` (abgerufen am ${date.toLocaleDateString("de-DE")}).`);
+    }
+  } else {
+    throw new Error(`No URL found in bibliography "${bib.key}"`);
+  }
+
+  return str.join("");
+};
+
+const bibAutoAsync = async (
+  bib: Bibliography | undefined | null,
+  key: string
+): Promise<string> => {
+  if (bib) {
+    switch (bib.type.toUpperCase()) {
+      case "BOOK":
+        return bibBook(bib);
+      case "ONLINE":
+        return await bibOnlineAsync(bib);
+      default:
+        return key;
+    }
+  } else {
+    return key;
+  }
 };
