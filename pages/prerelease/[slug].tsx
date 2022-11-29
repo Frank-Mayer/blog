@@ -12,6 +12,7 @@ const components = { SyntaxHighlighting, Link };
 
 export const getStaticPaths: GetStaticPaths = async () => ({
   paths: (await getContent(true))
+    .filter((item) => item.frontMatter.prerelease)
     .map((item) => getPath(item))
     .map((path) => joinPosix("/prerelease", path)),
   fallback: false,
