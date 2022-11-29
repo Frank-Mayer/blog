@@ -1,7 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 import { getContent, type Content } from "../utils/content";
 import { getPath } from "../utils/slug";
 
@@ -11,7 +10,7 @@ type Props = {
 
 export const getStaticProps: GetStaticProps<Props> = async () => ({
   props: {
-    content: await getContent(),
+    content: await getContent(false),
   },
 });
 

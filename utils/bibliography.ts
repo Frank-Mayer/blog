@@ -75,7 +75,13 @@ const bibAuthors = (bib: Bibliography): string => {
   if (bib.AUTHOR) {
     const authors = bib.AUTHOR.split(";")
       .map((author) => author.split(",").map((a) => a.trim()))
-      .map((author) => author[1][0].toUpperCase() + ". " + author[0]);
+      .map((author) => {
+        if (author.length === 2) {
+          return author[1][0].toUpperCase() + ". " + author[0];
+        } else {
+          return author.join(" ");
+        }
+      });
 
     const authorSep = authors.length > 2 ? "; " : " und ";
 
@@ -134,7 +140,9 @@ const bibBook = (bib: Bibliography): string => {
   }
 
   if (bib.YEAR) {
-    str.push(`${bib.YEAR}.`);
+    str.push(`${bib.YEAR}. `);
+  } else {
+    str.push("o.D. ");
   }
 
   if (bib.ISBN) {
@@ -158,6 +166,8 @@ const bibOnlineAsync = async (bib: Bibliography): Promise<string> => {
 
   if (bib.YEAR) {
     str.push(`(${bib.YEAR}). `);
+  } else {
+    str.push("o.D. ");
   }
 
   if (bib.TITLE) {

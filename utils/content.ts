@@ -41,10 +41,11 @@ export const parseFile = async (
   };
 };
 
-export const getContent = async () => {
+export const getContent = async (getPrerelease: boolean = true) => {
   const files = await (
     await readdir(contentDir)
   ).filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
+
   const contents = await Promise.all(
     files.map(async (file) => {
       const content = await readFile(join(contentDir, file), "utf-8");
@@ -52,7 +53,14 @@ export const getContent = async () => {
     })
   );
 
-  return contents.sort((a, b) => {
+  return (
+    getPrerelease
+      ? contents
+      : contents.filter((c) => {
+          console.debug(c.frontMatter);
+          return !("prerelease" in c.frontMatter) || !c.frontMatter.prerelease;
+        })
+  ).sort((a, b) => {
     return Date.parse(b.frontMatter.date) - Date.parse(a.frontMatter.date);
   }) as ReadonlyArray<Content>;
 };

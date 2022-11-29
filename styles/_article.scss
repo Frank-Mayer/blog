@@ -111,9 +111,31 @@ article {
     }
   }
 
+  blockquote {
+    border-left: 0.25em solid rgba(theme.$foreground, 0.5);
+    padding: {
+      left: 1rem;
+      right: 0.2rem;
+      top: 0.5rem;
+      bottom: 0.5rem;
+    }
+    margin: {
+      left: 0;
+      right: 0;
+      top: 1.5rem;
+      bottom: 1.5rem;
+    }
+    background-color: rgba(theme.$foreground, 0.05);
+  }
+
   .cites {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-gap: 0.2rem;
+  }
+
+  p code {
+    background-color: rgba(theme.$foreground, 0.1);
+    padding: 0 0.2rem;
   }
 }
