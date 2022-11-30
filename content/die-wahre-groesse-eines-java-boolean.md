@@ -11,7 +11,7 @@ photoBy:
 
 ## Was ist das Problem?
 
-Ich wurde von einer Kommilitonin gefragt, wie groß denn ein `boolean` in Java ist. Für war die naheliegenste Antworte, dass ein Boolean in Java 1 Byte Speicherplatz benötigt, da ein Byte die kleinste adressierbare Einheit ist. Um sicher zu gehen habe ich kurz recherchiert. Verschiedene vertrauenswürdige Quellen wie W3Schools [^w3-schools-java-data-types] sagen, dass ein `boolean` in Java 1 Bit Speicher verbraucht. Das kann aber nicht die ganze Wahrheit sein, da das wie gesagt nicht adressierbar wäre.
+Ich wurde von einer Kommilitonin gefragt, wie groß denn ein `boolean` in Java ist. Für mich war die naheliegenste Antwort 1 Byte, da das die kleinste adressierbare Einheit ist. Um sicher zu gehen habe ich kurz recherchiert. Verschiedene vertrauenswürdige Quellen wie W3Schools [^w3-schools-java-data-types] sagen, dass ein `boolean` in Java 1 Bit Speicher verbraucht. Das kann aber nicht die ganze Wahrheit sein, da das wie gesagt nicht adressierbar wäre.
 
 In der Java Dokumentation habe ich den Grund für die Verwirrung gefunden:
 
