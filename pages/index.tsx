@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import { getContent, type Content } from "../utils/content";
 import { getPath } from "../utils/slug";
@@ -24,7 +25,7 @@ const Page = (props: Props) => (
       {props.content.map((item, i) => (
         <li key={i}>
           <Link href={getPath(item)}>
-            <img
+            <Image
               className="article-thumbnail"
               src={"/thumbnails/" + item.frontMatter.thumbnail}
               width="320"
