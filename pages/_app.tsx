@@ -18,7 +18,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
-        <meta http-equiv="language" content="de" />
+        <meta httpEquiv="language" content="de" />
         <meta name="author" content="Frank Mayer" />
       </Head>
 

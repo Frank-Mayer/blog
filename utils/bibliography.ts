@@ -43,15 +43,34 @@ export const applyBibliographyAsync = async (
 
   const usedBib = new Array<string>();
 
-  let newMd = md.replace(/\[\^\s*([^}\n]+)\s*\]/g, (tex, id) => {
-    let i = -1;
-    if (usedBib.indexOf(id) === -1) {
-      i = usedBib.push(id);
+  let newMd = md.replace(/\[\^\s*([^}\n]+)\s*\]/g, (tex, ids: string) => {
+    if (ids.includes(",")) {
+      return (
+        '<span className="cite">&lbrack;' +
+        ids
+          .split(",")
+          .map((id) => id.trim())
+          .map((id) => {
+            let i =
+              usedBib.indexOf(id) === -1
+                ? usedBib.push(id)
+                : usedBib.indexOf(id) + 1;
+            return `<Link href="#cite-${i}">${i}</Link>`;
+          })
+          .join(", ") +
+        "&rbrack;</span>"
+      );
     } else {
-      i = usedBib.indexOf(id) + 1;
-    }
+      const id = ids.trim();
+      let i = -1;
+      if (usedBib.indexOf(id) === -1) {
+        i = usedBib.push(id);
+      } else {
+        i = usedBib.indexOf(id) + 1;
+      }
 
-    return `<Link className="cite" href="#cite-${i}">&lbrack;${i}&rbrack;</Link>`;
+      return `<Link className="cite" href="#cite-${i}">&lbrack;${i}&rbrack;</Link>`;
+    }
   });
 
   if (usedBib.length > 0) {

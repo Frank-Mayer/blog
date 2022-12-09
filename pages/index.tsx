@@ -2,18 +2,24 @@ import { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { mdToHtml } from "../lib/mdToHtml";
 import { getContent, type Content } from "../utils/content";
 import { getPath } from "../utils/slug";
 
 type Props = {
-  content: ReadonlyArray<Content>;
+  content: ReadonlyArray<Content & { html: string }>;
 };
 
-export const getStaticProps: GetStaticProps<Props> = async () => ({
-  props: {
-    content: await getContent(false),
-  },
-});
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  return {
+    props: {
+      content: (await getContent(false)).map((item) => ({
+        ...item,
+        html: mdToHtml(item.content),
+      })),
+    },
+  };
+};
 
 const Page = (props: Props) => (
   <>
@@ -37,7 +43,10 @@ const Page = (props: Props) => (
             <span className="article-description">
               {item.frontMatter.description}
             </span>
-            <p className="article-preview">{item.content.slice(0, 200)}</p>
+            <p
+              className="article-preview"
+              dangerouslySetInnerHTML={{ __html: item.html }}
+            />
           </Link>
           <span>
             Thumbnail von{" "}

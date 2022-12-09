@@ -3,7 +3,6 @@ title: Die wahre Größe eines Java boolean
 description: Wie viel Speicherplatz verbraucht ein boolean in Java?
 date: "2022-12-01"
 thumbnail: die-wahre-groesse-eines-java-boolean.webp
-prerelease: true
 photoBy:
   name: Benjamin Lehman
   url: https://unsplash.com/@benjaminlehman
@@ -25,4 +24,10 @@ Die JVM von Oracle behandelt einzelne `boolean` als einen `int`, der nur `0` ode
 
 ## Open JDK
 
-Die Open JDK behandelt die Typen `boolean`, `byte`, `short` und `char` auf dem Stack als `int` [^openjdk-types-cleanup-jvms], also mit einer Größe von 4 Byte.
+Die Open JDK behandelt die Typen `boolean`, `byte`, `short` und `char` auf dem Stack als `int`. [^openjdk-types-cleanup-jvms]
+
+## Warum ist das so?
+
+Für lokale Variablen, Methoden Parameter, und Expression Values werden Stack Cells verwendet. Dessen Größe ist abhängig von der Basic Word Size der Hardware (32 oder 64 Bit). Daten die kleiner als eine Stack Cell sind (wie `boolean`), werden aufgefüllt, Daten die größer als eine Cell sind, benötigen zwei Stack Cells. Diese Technik reduziert die Anzahl der [Opcodes](https://de.wikipedia.org/wiki/Opcode) auf ein Minimum, hat aber einige merkwürdige Nebeneffekte (z.B. die Notwendigkeit, Bytes zu maskieren). [^stackoverflow-1907318]
+
+In Arrays gespeicherte Primitive können weniger als 32 Bit verwenden. Es gibt verschiedene Opcodes zum Laden und Speichern primitiver Daten aus einem Array. Boolesche und Byte-Werte verwenden beide die Opcodes `baload` und `bastore`, was bedeutet, dass boolesche Arrays 1 Byte pro Element benötigen. [^stackoverflow-1907318,javase-jvm-baload,javase-jvm-bastore]
