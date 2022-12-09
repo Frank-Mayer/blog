@@ -32,6 +32,14 @@
           color: theme.$foreground-heading;
           font-weight: 700;
         }
+
+        &.article-preview {
+          opacity: 0.5;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
       }
     }
   }

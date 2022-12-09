@@ -37,6 +37,7 @@ const Page = (props: Props) => (
             <span className="article-description">
               {item.frontMatter.description}
             </span>
+            <p className="article-preview">{item.content.slice(0, 200)}</p>
           </Link>
           <span>
             Thumbnail von{" "}
