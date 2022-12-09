@@ -24,10 +24,6 @@
       > * {
         display: block;
 
-        &.article-thumbnail {
-          font-size: 1.5rem;
-        }
-
         &.article-title {
           color: theme.$foreground-heading;
           font-weight: 700;
@@ -39,6 +35,7 @@
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
+          max-height: #{3em * 1.45};
         }
       }
     }
