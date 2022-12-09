@@ -1,14 +1,24 @@
-export const mdToHtml = (md: string): string =>
-  md
-    .split(/[\r\n]+/g)
-    .filter((line) => !line.startsWith("#"))
-    .map((line) =>
-      line
-        .replace(/`([^`]+)`/g, (_, code) => `<code>${code}</code>`)
-        .replace(/\*\*([^*]+)\*\*/g, (_, bold) => `<b>${bold}</b>`)
-        .replace(/\*([^*]+)\*/g, (_, italic) => `<i>${italic}</i>`)
-        .replace(/^\*{3}.+/g, (_) => `<pre><code>`)
-        .replace(/.+\*{3}$/g, (_) => `</code></pre>`)
-    )
-    .map((line) => `<p>${line}</p>`)
-    .join("\n");
+import { Converter } from "showdown";
+
+const converter = new Converter({
+  tables: true,
+  noHeaderId: true,
+  ghCodeBlocks: true,
+});
+
+export const mdToHtmlPreview = (md: string): string => {
+  const html = converter.makeHtml(
+    md
+      .trim()
+      .split(/\r?\n/g)
+      .filter((line) => !line.startsWith("#"))
+      .map((line) => line.replace(/\[\^\s*([^}\n]+)\s*\]/g, ""))
+      .slice(0, 3)
+      .map((line) => `<p>${line}</p>`)
+      .join("\n")
+  );
+
+  console.debug("mdToHtmlPreview", html);
+
+  return html;
+};
