@@ -1,4 +1,5 @@
 @use "theme";
+@use "sass:color";
 
 body {
     *,
@@ -16,6 +17,35 @@ body {
     link {
         display: none !important;
     }
+}
+
+::selection {
+    color: theme.$color-background;
+    background: mix(theme.$color-primary, theme.$color-background, 75%);
+}
+
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+    background: theme.$color-background;
+}
+
+::-webkit-scrollbar-thumb {
+    &:not(:hover):not(:active) {
+        background: mix(theme.$color-foreground, theme.$color-background, 50%);
+    }
+    &:hover:not(:active) {
+        background: theme.$color-foreground;
+    }
+    &:active {
+        background: theme.$color-primary;
+    }
+}
+::-webkit-scrollbar-corner {
+    background: theme.$color-background;
 }
 
 :root {
