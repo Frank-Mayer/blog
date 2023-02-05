@@ -1,17 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { data } from "../utils/medium";
+import { data, ArticleData } from "../utils/medium";
 
-export function getStaticPaths(): Array<{ params: { slug: string } }> {
+export function getStaticPaths(): Array<{
+    params: { slug: string };
+    props: { articleData: ArticleData };
+}> {
     return data.entries.map((x) => ({
         params: {
             slug: x.slug,
         },
+        props: {
+            articleData: x,
+        },
     }));
 }
 
-const { slug } = Astro.params;
-const articleData = data.entries.find((x) => x.slug === slug);
+const { articleData } = Astro.props;
 ---
 
 <Layout title={articleData?.title ?? "N/A"}>

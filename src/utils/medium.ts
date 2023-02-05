@@ -1,13 +1,15 @@
 const dataResp = await fetch("https://api.frank-mayer.io/medium");
 
-type Data = {
+export type ArticleData = {
+    slug: string;
     title: string;
-    entries: Array<{
-        slug: string;
-        title: string;
-        content: string;
-        summary: string;
-    }>;
+    content: string;
+    summary: string;
+};
+
+export type Data = {
+    title: string;
+    entries: Array<ArticleData>;
 };
 
 export const data: Readonly<Data> = dataResp.ok
