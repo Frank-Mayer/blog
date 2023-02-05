@@ -1,11 +1,9 @@
 ---
+import type { Post } from "../types/Post";
 import Layout from "../layouts/Layout.astro";
-import { data, ArticleData } from "../utils/medium";
+import { data } from "../utils/medium";
 
-export function getStaticPaths(): Array<{
-    params: { slug: string };
-    props: { articleData: ArticleData };
-}> {
+export function getStaticPaths(): Array<Post> {
     return data.entries.map((x) => ({
         params: {
             slug: x.slug,
