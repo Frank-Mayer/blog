@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { data } from "../utils/medium";
+
+export function getStaticPaths(): Array<{ params: { slug: string } }> {
+    return data.entries.map((x) => ({
+        params: {
+            slug: x.slug,
+        },
+    }));
+}
+
+const { slug } = Astro.params;
+const articleData = data.entries.find((x) => x.slug === slug);
+---
+
+<Layout title={articleData?.title ?? "N/A"}>
+    <h1>{articleData?.title ?? "N/A"}</h1>
+    <article set:html={articleData?.content ?? "N/A"} />
+</Layout>

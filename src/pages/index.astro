@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { data } from "../utils/medium";
+---
+
+<Layout title={data.title}>
+    <h1>Meine Artikel</h1>
+    <ul>
+        {
+            data.entries.map((entry) => (
+                <li>
+                    <a href={"/" + entry.slug}>
+                        <b>{entry.title}</b>
+                        {entry.summary ? <i>{entry.summary}</i> : null}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</Layout>
