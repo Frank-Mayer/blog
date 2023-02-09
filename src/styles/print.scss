@@ -1,0 +1,17 @@
+@media print {
+    :root {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    nav {
+        display: none !important;
+        visibility: collapse !important;
+    }
+
+    figure figcaption,
+    figure figcaption * {
+        color: hsl(0, 0%, 12.5%) !important;
+        text-decoration: none !important;
+    }
+}
