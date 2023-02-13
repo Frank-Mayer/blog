@@ -1,0 +1,20 @@
+---
+export interface Props {
+    href: string;
+}
+
+const url = new URL(Astro.props.href, "https://blog.frank-mayer.io/");
+const external = url.hostname !== "blog.frank-mayer.io";
+---
+
+{
+    external ? (
+        <a href={url} target="_blank" rel="noreferrer noopener">
+            <slot />
+        </a>
+    ) : (
+        <a href={url.pathname}>
+            <slot />
+        </a>
+    )
+}

@@ -84,6 +84,7 @@ main {
     max-width: 720px;
     margin: 1rem auto;
     line-height: 1.5;
+    padding: 1rem 0.5rem 8rem 0.5rem;
 
     h1,
     h2,
@@ -166,6 +167,27 @@ main {
         figcaption {
             text-align: right;
             color: rgba(theme.$color-foreground, 0.5);
+        }
+    }
+}
+
+footer {
+    max-width: 720px;
+    margin: {
+        left: auto;
+        right: auto;
+    }
+
+    table {
+        border-spacing: 1rem;
+
+        th,
+        td {
+            text-align: left;
+
+            a {
+                color: theme.$color-primary;
+            }
         }
     }
 }

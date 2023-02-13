@@ -1,4 +1,5 @@
 ---
+import Link from "../components/Link.astro";
 import Layout from "../layouts/Layout.astro";
 import { data } from "../utils/medium";
 ---
@@ -9,10 +10,10 @@ import { data } from "../utils/medium";
         {
             data.entries.map((entry) => (
                 <li>
-                    <a href={"/" + entry.slug}>
+                    <Link href={"/" + entry.slug}>
                         <b>{entry.title}</b>
                         {entry.summary ? <i>{entry.summary}</i> : null}
-                    </a>
+                    </Link>
                 </li>
             ))
         }

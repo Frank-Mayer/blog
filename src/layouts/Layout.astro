@@ -1,10 +1,12 @@
 ---
+import Link from "../components/Link.astro";
 import "../styles/index.scss";
 
 export interface Props {
     title: string;
 }
 
+const canonical = new URL(Astro.url.pathname, "https://blog.frank-mayer.io/");
 const { title } = Astro.props;
 ---
 
@@ -14,15 +16,44 @@ const { title } = Astro.props;
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="canonical" href={canonical} />
         <meta name="generator" content={Astro.generator} />
+        <meta name="keywords" content="software, engineering" />
+        <meta name="author" content="Frank Mayer" />
         <title>{title}</title>
     </head>
     <body>
         <nav>
-            <a href="/"><img src="/favicon.svg" alt="" />Frank Mayer Blog</a>
+            <Link href="/"><img src="/favicon.svg" alt="" />Frank Mayer Blog</Link>
         </nav>
         <main>
             <slot />
         </main>
+        <footer>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Web Framework</th>
+                        <td><Link href="https://astro.build">Astro</Link></td>
+                    </tr>
+                    <tr>
+                        <th>CMS</th>
+                        <td
+                            ><Link href="https://medium.com/@tsukinoko">
+                                Medium
+                            </Link></td
+                        >
+                    </tr>
+                    <tr>
+                        <th>Hosting</th>
+                        <td
+                            ><Link href="https://pages.cloudflare.com/">
+                                Cloudflare Pages
+                            </Link></td
+                        >
+                    </tr>
+                </tbody>
+            </table>
+        </footer>
     </body>
 </html>
