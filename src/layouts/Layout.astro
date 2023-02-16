@@ -4,10 +4,14 @@ import "../styles/index.scss";
 
 export interface Props {
     title: string;
+    summary?: string;
+    preview?: string;
+    keywords?: Array<string>;
+    published?: string;
 }
 
 const canonical = new URL(Astro.url.pathname, "https://blog.frank-mayer.io/");
-const { title } = Astro.props;
+const props = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -17,14 +21,50 @@ const { title } = Astro.props;
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="canonical" href={canonical} />
+        <meta property="og:url" content={canonical} />
         <meta name="generator" content={Astro.generator} />
-        <meta name="keywords" content="software, engineering" />
+        {
+            props.published ? (
+                <>
+                    <meta
+                        property="article:published_time"
+                        content={props.published}
+                    />
+                    <meta property="og:type" content="article" />
+                </>
+            ) : (
+                <meta property="og:type" content="website" />
+            )
+        }
+        <meta
+            name="keywords"
+            content={props.keywords
+                ? props.keywords.join(", ")
+                : "software, engineering"}
+        />
+        {
+            props.summary ? (
+                <>
+                    <meta name="description" content={props.summary} />
+                    <meta property="og:description" content={props.summary} />
+                </>
+            ) : null
+        }
         <meta name="author" content="Frank Mayer" />
-        <title>{title}</title>
+        {
+            props.preview ? (
+                <meta property="og:image" content={props.preview} />
+            ) : null
+        }
+        <meta property="og:title" content={props.title} />
+        <title>{props.title}</title>
+        <meta property="og:site_name" content="Frank Mayer Blog" />
     </head>
     <body>
         <nav>
-            <Link href="/"><img src="/favicon.svg" alt="" />Frank Mayer Blog</Link>
+            <Link href="/">
+                <img src="/favicon.svg" alt="" />Frank Mayer Blog
+            </Link>
         </nav>
         <main>
             <slot />

@@ -1,7 +1,7 @@
 ---
 import type { Post } from "../types/Post";
 import Layout from "../layouts/Layout.astro";
-import { data } from "../utils/medium";
+import { ArticleData, data } from "../utils/medium";
 
 export function getStaticPaths(): Array<Post> {
     return data.entries.map((x) => ({
@@ -14,10 +14,16 @@ export function getStaticPaths(): Array<Post> {
     }));
 }
 
-const { articleData } = Astro.props;
+const articleData: ArticleData = Astro.props.articleData;
 ---
 
-<Layout title={articleData?.title ?? "N/A"}>
+<Layout
+    title={articleData?.title ?? "N/A"}
+    keywords={articleData.keywords}
+    preview={articleData.preview_img}
+    published={articleData.published}
+    summary={articleData.summary}
+>
     <h1>{articleData?.title ?? "N/A"}</h1>
     <article set:html={articleData?.content ?? "N/A"} />
 </Layout>

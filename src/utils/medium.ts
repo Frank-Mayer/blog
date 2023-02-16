@@ -5,6 +5,9 @@ export type ArticleData = {
     title: string;
     content: string;
     summary: string;
+    published: string;
+    keywords: Array<string>;
+    preview_img: string;
 };
 
 export type Data = {
