@@ -2,6 +2,9 @@
 import type { Post } from "../types/Post";
 import Layout from "../layouts/Layout.astro";
 import { ArticleData, data } from "../utils/medium";
+import hljs from "highlight.js";
+import "highlight.js/scss/nord.scss";
+import { htmlToText } from "../utils/htmlToText";
 
 export function getStaticPaths(): Array<Post> {
     return data.entries.map((x) => ({
@@ -15,6 +18,16 @@ export function getStaticPaths(): Array<Post> {
 }
 
 const articleData: ArticleData = Astro.props.articleData;
+
+const content = articleData.content
+    ? articleData.content
+          .replace(/<a\s/gi, '<a target="_blank" rel="noreferrer noopener" ')
+          .replace(/<pre>\s*((.|\n)*?)\s*<\/pre>/gi, (_, code) => {
+              const result = hljs.highlightAuto(htmlToText(code));
+
+              return `<pre><code data-language="${result.language}">${result.value}</code></pre>`;
+          })
+    : "N/A";
 ---
 
 <Layout
@@ -25,10 +38,5 @@ const articleData: ArticleData = Astro.props.articleData;
     summary={articleData.summary}
 >
     <h1>{articleData?.title ?? "N/A"}</h1>
-    <article
-        set:html={articleData?.content?.replace(
-            /<a\s/gi,
-            '<a target="_blank" rel="noreferrer noopener" '
-        ) ?? "N/A"}
-    />
+    <article set:html={content} />
 </Layout>

@@ -12,7 +12,8 @@
     },
     "dependencies": {
         "@astrojs/sitemap": "^1.0.1",
-        "astro": "^2.0.12"
+        "astro": "^2.0.12",
+        "highlight.js": "^11.7.0"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",
