@@ -20,39 +20,53 @@ body {
     }
 }
 
-::selection {
-    color: theme.$color-background;
-    background: mix(theme.$color-primary, theme.$color-background, 75%);
-}
-
-::-webkit-scrollbar {
-    width: 0.5rem;
-    height: 0.5rem;
-}
-
-::-webkit-scrollbar-track {
-    background: theme.$color-background;
-}
-
-::-webkit-scrollbar-thumb {
-    &:not(:hover):not(:active) {
-        background: mix(theme.$color-foreground, theme.$color-background, 50%);
+@media screen {
+    ::selection {
+        color: theme.$color-background;
+        background: mix(theme.$color-primary, theme.$color-background, 75%);
     }
-    &:hover:not(:active) {
-        background: theme.$color-foreground;
+
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+        height: 0.5rem;
     }
-    &:active {
-        background: theme.$color-primary;
+
+    ::-webkit-scrollbar-track {
+        background: theme.$color-background;
     }
-}
-::-webkit-scrollbar-corner {
-    background: theme.$color-background;
+
+    ::-webkit-scrollbar-thumb {
+        &:not(:hover):not(:active) {
+            background: mix(
+                theme.$color-foreground,
+                theme.$color-background,
+                50%
+            );
+        }
+        &:hover:not(:active) {
+            background: theme.$color-foreground;
+        }
+        &:active {
+            background: theme.$color-primary;
+        }
+    }
+
+    ::-webkit-scrollbar-corner {
+        background: theme.$color-background;
+    }
 }
 
 :root {
     background-color: theme.$color-background;
     color: theme.$color-foreground;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Circular", "Gotham", "Satoshi", "Montserrat", "Segoe UI",
+        "Arial", sans-serif;
+}
+
+@media screen and (max-width: 420px) {
+    :root {
+        font-size: 0.75rem;
+    }
 }
 
 nav a {
@@ -110,6 +124,10 @@ main {
         font-weight: 550;
     }
 
+    h4 {
+        font-size: 1.75rem;
+    }
+
     article > * {
         margin: 1rem 0;
     }
@@ -151,10 +169,15 @@ main {
     }
 
     pre {
-        font-family: monospace;
         overflow-x: auto;
         max-width: 100%;
         display: block;
+    }
+
+    code,
+    code * {
+        font-family: "Hack", "Cascadia Code", "JetBrains Mono", "Anonymous Pro",
+            "Monolisa", "Gintronic", "Dank Mono", "PragmataPro", monospace !important;
     }
 
     blockquote {
