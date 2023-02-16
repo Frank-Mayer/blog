@@ -150,6 +150,13 @@ main {
         word-break: break-all;
     }
 
+    pre {
+        font-family: monospace;
+        overflow-x: auto;
+        max-width: 100%;
+        display: block;
+    }
+
     blockquote {
         background-color: rgba(theme.$color-foreground, 0.1);
         border-left: 2px solid theme.$color-foreground;
