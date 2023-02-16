@@ -25,5 +25,10 @@ const articleData: ArticleData = Astro.props.articleData;
     summary={articleData.summary}
 >
     <h1>{articleData?.title ?? "N/A"}</h1>
-    <article set:html={articleData?.content ?? "N/A"} />
+    <article
+        set:html={articleData?.content?.replace(
+            /<a\s/gi,
+            '<a target="_blank" rel="noreferrer noopener" '
+        ) ?? "N/A"}
+    />
 </Layout>
