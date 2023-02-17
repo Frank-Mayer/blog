@@ -121,6 +121,8 @@ main {
 
     h1 {
         font-size: 4rem;
+        overflow-wrap: break-word;
+        hyphens: auto;
         font-weight: 650;
     }
 
