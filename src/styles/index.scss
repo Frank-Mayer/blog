@@ -9,7 +9,6 @@ body {
         box-sizing: border-box;
         outline: none;
         border: none;
-        font-size: 1.125rem;
         font-weight: 400;
     }
 
@@ -64,24 +63,35 @@ body {
 }
 
 @media screen and (max-width: 420px) {
-    :root {
+    body {
         font-size: 0.75rem;
     }
 }
 
-nav a {
-    font-size: 2rem;
-    color: theme.$color-foreground;
-    height: fit-content;
-    width: fit-content;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+nav {
+    background-color: theme.$color-background;
+    box-shadow: 0 0 16px 8px theme.$color-background;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
 
-    img {
-        height: 4.5rem;
-        width: 4.5rem;
-        display: inline-block;
+    a {
+        font-size: 2rem;
+        color: theme.$color-foreground;
+        height: fit-content;
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        img {
+            height: 4.5rem;
+            width: 4.5rem;
+            display: inline-block;
+        }
     }
 }
 
@@ -106,7 +116,7 @@ main {
     h4,
     h5,
     h6 {
-        font-family: "Times New Roman", Times, serif !important;
+        font-family: "Baskerville", "Times New Roman", Times, serif !important;
     }
 
     h1 {
@@ -126,6 +136,7 @@ main {
 
     h4 {
         font-size: 1.75rem;
+        font-weight: 500;
     }
 
     article > * {
@@ -148,7 +159,7 @@ main {
 
         article {
             overflow: hidden;
-            white-space: nowrap; /* Don't forget this one */
+            white-space: nowrap;
             text-overflow: ellipsis;
             max-height: 5rem;
         }
@@ -169,13 +180,41 @@ main {
     }
 
     pre {
-        overflow-x: auto;
-        max-width: 100%;
-        display: block;
+        margin: {
+            top: 2rem;
+            bottom: 2rem;
+        }
+        padding-left: 3ch;
+        position: relative;
+
+        &::before {
+            $c: "";
+            @for $i from 1 through 32 {
+                $c: $c + $i + "\a ";
+            }
+            content: $c;
+            color: theme.$color-comment;
+            text-align: right;
+            position: absolute;
+            top: 0;
+            height: calc(100% - 0.4em);
+            left: 0;
+            overflow: hidden;
+        }
+
+        > code {
+            display: block;
+            overflow-x: auto;
+            max-width: 100%;
+        }
     }
 
+    pre,
+    pre *,
+    pre::before,
     code,
     code * {
+        // font-size: 0.75rem !important;
         font-family: "Hack", "Cascadia Code", "JetBrains Mono", "Anonymous Pro",
             "Monolisa", "Gintronic", "Dank Mono", "PragmataPro", monospace !important;
     }
